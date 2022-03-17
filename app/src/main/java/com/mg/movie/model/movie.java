@@ -7,14 +7,14 @@ public class movie {
     private int id;
     private String original_title;
     private String overview;
-    private double popularity;
+    private float popularity;
     private String poster_path;
     private String release_date;
-    private double vote_average;
+    private float vote_average;
     private int vote_count;
     private ArrayList<Integer> genre_ids;
 
-    public movie(int id, String original_title, String overview, double popularity, String poster_path, String release_date, double vote_average, int vote_count, ArrayList<Integer> genre_ids) {
+    public movie(int id, String original_title, String overview, float popularity, String poster_path, String release_date, float vote_average, int vote_count, ArrayList<Integer> genre_ids) {
         this.id = id;
         this.original_title = original_title;
         this.overview = overview;
@@ -50,11 +50,11 @@ public class movie {
         this.overview = overview;
     }
 
-    public double getPopularity() {
+    public float getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(double popularity) {
+    public void setPopularity(float popularity) {
         this.popularity = popularity;
     }
 
@@ -74,11 +74,11 @@ public class movie {
         this.release_date = release_date;
     }
 
-    public double getVote_average() {
+    public float getVote_average() {
         return vote_average;
     }
 
-    public void setVote_average(double vote_average) {
+    public void setVote_average(float vote_average) {
         this.vote_average = vote_average;
     }
 

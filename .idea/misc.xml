@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.15729166666666666" />
-        <entry key="app/src/main/res/layout/movie_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/movie_item.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/rateditem.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/shimmerplaceholder.xml" value="0.31979166666666664" />
+        <entry key="app/src/main/res/layout/top_rated_shimmer.xml" value="0.67" />
       </map>
     </option>
   </component>

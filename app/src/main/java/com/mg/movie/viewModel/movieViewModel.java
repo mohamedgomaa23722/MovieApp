@@ -1,6 +1,9 @@
 package com.mg.movie.viewModel;
 
+import static com.mg.movie.utils.constantVariables.POPULAR;
 import static com.mg.movie.utils.constantVariables.TMDB_API_KEY;
+import static com.mg.movie.utils.constantVariables.TOP_RATED;
+import static com.mg.movie.utils.constantVariables.UPCOMING;
 
 import android.util.Log;
 
@@ -13,16 +16,16 @@ import com.mg.movie.repository.Repository;
 
 import java.util.List;
 
-import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class movieViewModel extends ViewModel {
-
-    private Repository repository;
-    private MutableLiveData<List<movie>> moviesData=new MutableLiveData<>();
+    private static final String TAG = "movieViewModel";
+    private final Repository repository;
+    private final MutableLiveData<List<movie>> moviesData=new MutableLiveData<>();
+    private final MutableLiveData<List<movie>> topRatedMoviesData=new MutableLiveData<>();
+    private final MutableLiveData<List<movie>> upComingMoviesData=new MutableLiveData<>();
 
     @ViewModelInject
     public movieViewModel(Repository repository) {
@@ -30,14 +33,41 @@ public class movieViewModel extends ViewModel {
     }
 
     public void getMovies(){
-        repository.getMovies("popular",TMDB_API_KEY,1)
+        repository.getMovies(POPULAR,TMDB_API_KEY,1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> moviesData.setValue(movieResponse.getResults())
-                 , error -> Log.e("viewModel", "",error ));
+                 , error -> Log.e("viewModel", "",error )
+                ,() ->Log.d(TAG, "Completed: "));
     }
 
+
+    public void getTopRatedMovies(){
+        repository.getMovies(TOP_RATED,TMDB_API_KEY,1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> topRatedMoviesData.setValue(movieResponse.getResults())
+                        , error -> Log.e("viewModel", "",error )
+                        ,() ->Log.d(TAG, "Completed: "));
+    }
+
+    public void getUpcomingMovies(){
+        repository.getMovies(UPCOMING,TMDB_API_KEY,1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> upComingMoviesData.setValue(movieResponse.getResults())
+                        , error -> Log.e("viewModel", "",error )
+                        ,() ->Log.d(TAG, "Completed: "));
+    }
     public MutableLiveData<List<movie>> getMoviesData() {
         return moviesData;
+    }
+
+    public MutableLiveData<List<movie>> getTopRatedMoviesData() {
+        return topRatedMoviesData;
+    }
+
+    public MutableLiveData<List<movie>> getUpComingMoviesData() {
+        return upComingMoviesData;
     }
 }

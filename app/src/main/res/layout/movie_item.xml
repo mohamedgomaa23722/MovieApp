@@ -1,29 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/_5sdp"
-    android:layout_margin="@dimen/_5sdp">
+    android:layout_margin="@dimen/_5sdp"
+    app:cardBackgroundColor="@color/purple_200">
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_150sdp">
+
         <ImageView
             android:id="@+id/movie_image"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_120sdp"
-            />
-        <TextView
-            android:id="@+id/movie_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+
+        <RatingBar
+            android:id="@+id/rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/movie_image"
-            android:text="SpiderMan"
-            android:textSize="18sp"
+            android:layout_alignParentBottom="true"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="4.5"
+            android:progressTint="@color/yellow"
+            android:backgroundTint="@color/yellow"
+            android:progressBackgroundTint="@color/yellow"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp" />
+
+        <TextView
+            android:id="@+id/rate_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:text="7.5"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/rating_bar"
+            android:textColor="@color/yellow"
             android:textStyle="bold"
-            android:textColor="#2E2E2E"
-            android:layout_margin="@dimen/_8sdp"
-            />
+            android:textSize="15sp" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

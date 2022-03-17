@@ -13,7 +13,7 @@
         android:name=".BaseApplication"
         android:theme="@style/Theme.Movie">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
