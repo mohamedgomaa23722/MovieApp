@@ -15,22 +15,22 @@ import com.bumptech.glide.Glide;
 import com.mg.movie.R;
 import com.mg.movie.model.movie;
 import com.mg.movie.network.OnItemClicked;
-import com.mg.movie.ui.ViewHolder.TopRatedViewHolder;
+import com.mg.movie.ui.ViewHolder.PopularViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.hilt.android.qualifiers.ApplicationContext;
 
-public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedViewHolder>{
+import dagger.hilt.android.qualifiers.ApplicationContext;
+public class PopularAdapter extends RecyclerView.Adapter<PopularViewHolder> {
     private List<movie> mList = new ArrayList<>();
     private final Context mContext;
-    private OnItemClicked onItemClicked;
+    private  OnItemClicked onItemClicked;
 
     @Inject
-    public TopRatedAdapter(@ApplicationContext Context mContext) {
+    public PopularAdapter(@ApplicationContext Context mContext) {
         this.mContext = mContext;
     }
 
@@ -40,16 +40,17 @@ public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedViewHolder>{
 
     @NonNull
     @Override
-    public TopRatedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TopRatedViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rateditem, parent, false));
+    public PopularViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new PopularViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TopRatedViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PopularViewHolder holder, int position) {
         Glide.with(mContext).load(IMAGE_URL+mList.get(position).getPoster_path())
-                .into(holder.topRatedMovieImage);
-        holder.topRatedMovieName.setText(mList.get(position).getOriginal_title());
-        holder.topRatedMovieDate.setText(mList.get(position).getRelease_date());
+                .into(holder.movieImage);
+        float movie_rate= (float) (mList.get(position).getVote_average()/ 2.00);
+        holder.ratingBar.setRating(movie_rate);
+        holder.ratingNumber.setText(String.valueOf(mList.get(position).getVote_average()));
         holder.itemView.setOnClickListener(view -> onItemClicked.onClickListener(mList.get(position)));
     }
 
@@ -64,3 +65,4 @@ public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedViewHolder>{
         notifyDataSetChanged();
     }
 }
+

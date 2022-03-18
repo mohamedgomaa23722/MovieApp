@@ -32,7 +32,7 @@ public class movieViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public void getMovies(){
+    public void getPopularMovies(){
         repository.getMovies(POPULAR,TMDB_API_KEY,1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

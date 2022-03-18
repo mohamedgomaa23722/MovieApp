@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.mg.movie.adapter.PopularAdapter;
 import com.mg.movie.adapter.TopRatedAdapter;
-import com.mg.movie.adapter.movieAdapter;
 import com.mg.movie.databinding.ActivityMainBinding;
 import com.mg.movie.model.movie;
 import com.mg.movie.network.OnItemClicked;
 import com.mg.movie.viewModel.movieViewModel;
 
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClicked {
     private ActivityMainBinding binding;
     private movieViewModel viewModel;
     @Inject
-    movieAdapter adapter;
+    PopularAdapter popularAdapter;
     @Inject
     TopRatedAdapter topRatedAdapter;
     @Inject
@@ -50,19 +49,19 @@ public class MainActivity extends AppCompatActivity implements OnItemClicked {
     }
 
     private void InitializeAdapters(){
-        binding.PopularRecycler.setAdapter(adapter);
+        binding.PopularRecycler.setAdapter(popularAdapter);
         binding.ratedRecycler.setAdapter(topRatedAdapter);
         binding.UpcomingRecycler.setAdapter(upcomingAdapter);
         //Handle onItemClicked
-        adapter.setOnItemClicked(this);
+        popularAdapter.setOnItemClicked(this);
         topRatedAdapter.setOnItemClicked(this);
         upcomingAdapter.setOnItemClicked(this);
     }
 
     private void InitializePopularMovies() {
-        viewModel.getMovies();
+        viewModel.getPopularMovies();
         viewModel.getMoviesData().observe(this, PopularMovies -> {
-            adapter.setList(PopularMovies);
+            popularAdapter.setList(PopularMovies);
             AnimateView(binding.PopularRecycler, binding.shimmerLayout);
         });
     }

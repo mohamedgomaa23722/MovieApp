@@ -12,7 +12,7 @@ public class Repository {
     private movieApiService movieApiService=null;
 
     @Inject
-    public Repository(com.mg.movie.network.movieApiService movieApiService) {
+    public Repository(movieApiService movieApiService) {
         this.movieApiService = movieApiService;
     }
 
