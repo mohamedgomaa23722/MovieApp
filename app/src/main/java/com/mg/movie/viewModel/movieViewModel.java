@@ -1,6 +1,8 @@
 package com.mg.movie.viewModel;
 
 import static com.mg.movie.utils.constantVariables.POPULAR;
+import static com.mg.movie.utils.constantVariables.RECOMMENDED;
+import static com.mg.movie.utils.constantVariables.SIMILAR;
 import static com.mg.movie.utils.constantVariables.TMDB_API_KEY;
 import static com.mg.movie.utils.constantVariables.TOP_RATED;
 import static com.mg.movie.utils.constantVariables.UPCOMING;
@@ -13,7 +15,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.mg.movie.model.castData.CastDetails;
 import com.mg.movie.model.castData.cast;
-import com.mg.movie.model.movie;
+import com.mg.movie.model.MovieData.movie;
+import com.mg.movie.model.personData.Person;
 import com.mg.movie.model.trialer.movieTrailer;
 import com.mg.movie.repository.Repository;
 
@@ -33,6 +36,9 @@ public class movieViewModel extends ViewModel {
     private final MutableLiveData<List<movieTrailer>> movieTrailerData = new MutableLiveData<>();
     private final MutableLiveData<List<movie>> RecommendedMoviesData = new MutableLiveData<>();
     private final MutableLiveData<CastDetails> CastDetailsData = new MutableLiveData<>();
+    private final MutableLiveData<List<movie>> SimilarMoviesData = new MutableLiveData<>();
+    private final MutableLiveData<List<movie>> SearchedResultData = new MutableLiveData<>();
+    private final MutableLiveData<List<Person>> SearchedActorResultData = new MutableLiveData<>();
 
     @ViewModelInject
     public movieViewModel(Repository repository) {
@@ -86,7 +92,7 @@ public class movieViewModel extends ViewModel {
     }
 
     public void getRecommendedMovies(int movie_id){
-        repository.getSpecificMovies(movie_id,"recommendations")
+        repository.getSpecificMovies(movie_id,RECOMMENDED)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(RecommendedResponse -> RecommendedMoviesData.setValue(RecommendedResponse.getResults())
@@ -99,6 +105,33 @@ public class movieViewModel extends ViewModel {
                    .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(CastDetailsData::setValue);
+    }
+
+    public void getSimilarMovies(int movie_id){
+        repository.getSpecificMovies(movie_id,SIMILAR)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(SimilarResponse -> SimilarMoviesData.setValue(SimilarResponse.getResults())
+                        , error -> Log.e("viewModel", "", error)
+                        , () -> Log.d(TAG, "Completed: "));
+    }
+
+    public void SearchForSomeMovie(String MovieName){
+        repository.SearchForSomeMovie(MovieName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(SearchResponse -> SearchedResultData.setValue(SearchResponse.getResults())
+                        , error -> Log.e("viewModel", "", error)
+                        , () -> Log.d(TAG, "Completed: "));
+    }
+
+    public void SearchForSomeActor(String ActorName){
+        repository.SearchForSomeActor(ActorName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(ActorResponse -> SearchedActorResultData.setValue(ActorResponse.getResults())
+                        , error -> Log.e("viewModel", "", error)
+                        , () -> Log.d(TAG, "Completed: "));
     }
 
     public MutableLiveData<List<movie>> getMoviesData() {
@@ -127,5 +160,17 @@ public class movieViewModel extends ViewModel {
 
     public MutableLiveData<CastDetails> getCastDetailsData() {
         return CastDetailsData;
+    }
+
+    public MutableLiveData<List<movie>> getSimilarMoviesData() {
+        return SimilarMoviesData;
+    }
+
+    public MutableLiveData<List<movie>> getSearchedResultData() {
+        return SearchedResultData;
+    }
+
+    public MutableLiveData<List<Person>> getSearchedActorResultData() {
+        return SearchedActorResultData;
     }
 }

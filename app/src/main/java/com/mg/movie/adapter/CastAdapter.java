@@ -50,9 +50,15 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CastViewHolder holder, int position) {
         cast cast = mList.get(position);
-        Glide.with(mContext).load(IMAGE_URL + cast.getProfile_path())
-                .placeholder(R.drawable.ic_profile)
+
+        Glide.with(mContext).load(IMAGE_URL+cast.getProfile_path())
+                .placeholder(R.drawable.loading)
+                .fallback(R.drawable.loading)
+                .fitCenter()
                 .into(holder.cast_Image);
+        if (cast.getProfile_path() ==null)
+            Log.d(TAG, "gomaaonBindViewHolder: null");
+
         holder.cast_Name.setText(cast.getName());
         holder.cast_rule_name.setText(cast.getCharacter());
         holder.itemView.setOnClickListener(view -> onItemClicked.CastClicked(cast));

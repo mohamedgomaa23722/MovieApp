@@ -7,7 +7,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,22 +14,22 @@ import com.bumptech.glide.Glide;
 import com.mg.movie.R;
 import com.mg.movie.model.MovieData.movie;
 import com.mg.movie.network.OnItemClicked;
-import com.mg.movie.ui.ViewHolder.PopularViewHolder;
+import com.mg.movie.ui.ViewHolder.SearchViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-
 import dagger.hilt.android.qualifiers.ApplicationContext;
-public class PopularAdapter extends RecyclerView.Adapter<PopularViewHolder> {
+
+public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder>{
     private List<movie> mList = new ArrayList<>();
     private final Context mContext;
-    private  OnItemClicked onItemClicked;
+    private OnItemClicked onItemClicked;
 
     @Inject
-    public PopularAdapter(@ApplicationContext Context mContext) {
+    public SearchAdapter(@ApplicationContext Context mContext) {
         this.mContext = mContext;
     }
 
@@ -40,17 +39,16 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularViewHolder> {
 
     @NonNull
     @Override
-    public PopularViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PopularViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent, false));
+    public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new SearchViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.search_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PopularViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         Glide.with(mContext).load(IMAGE_URL+mList.get(position).getPoster_path())
-                .into(holder.movieImage);
-        float movie_rate= (float) (mList.get(position).getVote_average()/ 2.00);
-        holder.ratingBar.setRating(movie_rate);
-        holder.ratingNumber.setText(String.valueOf(mList.get(position).getVote_average()));
+                .into(holder.Searched_Movie_Image);
+        holder.Searched_Movie_Name.setText(mList.get(position).getOriginal_title());
+        holder.Searched_Movie_Overview.setText(mList.get(position).getOverview());
         holder.itemView.setOnClickListener(view -> onItemClicked.onClickListener(mList.get(position)));
     }
 
@@ -65,4 +63,3 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularViewHolder> {
         notifyDataSetChanged();
     }
 }
-

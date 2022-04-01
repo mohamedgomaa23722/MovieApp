@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/_5sdp"
-    android:background="@color/purple_200">
+    android:background="@android:color/transparent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -24,6 +24,20 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
          />
+
+        <TextView
+            android:id="@+id/Image_Validation_Message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No Image"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textStyle="bold"
+
+            />
     </androidx.cardview.widget.CardView>
 
     <TextView

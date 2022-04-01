@@ -2,11 +2,10 @@ package com.mg.movie.repository;
 
 import static com.mg.movie.utils.constantVariables.TMDB_API_KEY;
 
-import android.graphics.Movie;
-
-import com.mg.movie.model.MovieResponse;
+import com.mg.movie.model.MovieData.MovieResponse;
 import com.mg.movie.model.castData.CastDetails;
 import com.mg.movie.model.castData.CastResponse;
+import com.mg.movie.model.personData.PersonResponse;
 import com.mg.movie.model.trialer.videoResponse;
 import com.mg.movie.network.movieApiService;
 
@@ -42,5 +41,12 @@ public class Repository {
 
     public Single<CastDetails> getCastDetails(int person_id){
         return movieApiService.getCastDetails(person_id, TMDB_API_KEY);
+    }
+
+    public Observable<MovieResponse> SearchForSomeMovie(String MovieName){
+        return movieApiService.SearchForMovie(MovieName,TMDB_API_KEY,1);
+    }
+    public Observable<PersonResponse> SearchForSomeActor(String ActorName){
+        return movieApiService.SearchForActor(ActorName,TMDB_API_KEY,1);
     }
 }

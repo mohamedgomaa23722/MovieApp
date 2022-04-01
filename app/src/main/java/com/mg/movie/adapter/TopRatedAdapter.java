@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.mg.movie.R;
-import com.mg.movie.model.movie;
+import com.mg.movie.model.MovieData.movie;
 import com.mg.movie.network.OnItemClicked;
 import com.mg.movie.ui.ViewHolder.TopRatedViewHolder;
 

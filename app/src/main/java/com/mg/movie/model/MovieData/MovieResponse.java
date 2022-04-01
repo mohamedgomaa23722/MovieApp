@@ -1,6 +1,4 @@
-package com.mg.movie.model;
-
-import com.mg.movie.model.movie;
+package com.mg.movie.model.MovieData;
 
 import java.util.List;
 

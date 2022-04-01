@@ -21,20 +21,17 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mg.movie.R;
 import com.mg.movie.adapter.PopularAdapter;
 import com.mg.movie.adapter.TopRatedAdapter;
-import com.mg.movie.databinding.ActivityMainBinding;
 import com.mg.movie.databinding.FragmentMainBinding;
-import com.mg.movie.model.movie;
+import com.mg.movie.model.MovieData.movie;
 import com.mg.movie.network.OnItemClicked;
 import com.mg.movie.viewModel.movieViewModel;
-
-import org.xmlpull.v1.XmlPullParser;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MainFragment extends Fragment implements OnItemClicked {
+public class MainFragment extends Fragment implements OnItemClicked, View.OnClickListener {
     private static final String TAG = "MainActivity";
     private FragmentMainBinding binding;
     private movieViewModel viewModel;
@@ -44,6 +41,7 @@ public class MainFragment extends Fragment implements OnItemClicked {
     TopRatedAdapter topRatedAdapter;
     @Inject
     TopRatedAdapter upcomingAdapter;
+    private NavController navController;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -57,6 +55,8 @@ public class MainFragment extends Fragment implements OnItemClicked {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(movieViewModel.class);
+        navController = Navigation.findNavController(binding.getRoot());
+
         InitializeAdapters();
         InitializePopularMovies();
         InitializeTopRatedMovies();
@@ -77,6 +77,7 @@ public class MainFragment extends Fragment implements OnItemClicked {
         popularAdapter.setOnItemClicked(this);
         topRatedAdapter.setOnItemClicked(this);
         upcomingAdapter.setOnItemClicked(this);
+        binding.SearchViewContainer.setOnClickListener(this);
     }
 
     private void InitializePopularMovies() {
@@ -127,9 +128,20 @@ public class MainFragment extends Fragment implements OnItemClicked {
 
     @Override
     public void onClickListener(movie movie) {
-        NavController navController= Navigation.findNavController(binding.getRoot());
-        Bundle SelectedMovie=new Bundle();
-        SelectedMovie.putSerializable(MOVIE_DATA,movie);
-        navController.navigate(R.id.action_mainFragment_to_detailsFragment2,SelectedMovie);
+        Bundle SelectedMovie = new Bundle();
+        SelectedMovie.putSerializable(MOVIE_DATA, movie);
+        MoveUp(R.id.action_mainFragment_to_detailsFragment2, SelectedMovie);
+    }
+
+    @Override
+    public void onClick(View view) {
+        MoveUp(R.id.action_mainFragment_to_searchFragment, null);
+    }
+
+    private void MoveUp(int Action, Bundle Data) {
+        if (Data == null)
+            navController.navigate(Action);
+        else
+            navController.navigate(Action, Data);
     }
 }

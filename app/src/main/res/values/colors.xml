@@ -10,5 +10,7 @@
     <color name="yellow">#FFC20C</color>
     <color name="shimmer_placeholder">#303030</color>
     <color name="shimmer_placeholder2">#474747</color>
+    <color name="shimmer_placeholder3">#232323</color>
+    <color name="unselectedColor">#FF2A2B37</color>
 
 </resources>

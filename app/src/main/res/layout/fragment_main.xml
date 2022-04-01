@@ -3,26 +3,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
+    android:background="@drawable/ic_rectangle_14"
     tools:context=".ui.Fragments.MainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple_200">
+        >
+
+        <TextView
+            android:id="@+id/Home_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Home"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/SearchViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/ic_searchback"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Home_page_title">
+
+            <ImageView
+                android:id="@+id/search_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:src="@drawable/ic_baseline_search_24" />
+
+            <TextView
+                android:id="@+id/SearchTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_toEndOf="@+id/search_ic"
+                android:text="Search"
+                android:textColor="#6A6B73"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/popular_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/most_popular"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/SearchViewContainer" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerLayout"
@@ -41,19 +87,19 @@
 
                 <!--add  several shimmer placeholder layout -->
 
-                <include layout="@layout/most_popular_shimmer"></include>
+                <include layout="@layout/most_popular_shimmer" />
 
-                <include layout="@layout/most_popular_shimmer"></include>
+                <include layout="@layout/most_popular_shimmer" />
 
-                <include layout="@layout/most_popular_shimmer"></include>
+                <include layout="@layout/most_popular_shimmer" />
 
-                <include layout="@layout/most_popular_shimmer"></include>
+                <include layout="@layout/most_popular_shimmer" />
 
-                <include layout="@layout/most_popular_shimmer"></include>
+                <include layout="@layout/most_popular_shimmer" />
 
-                <include layout="@layout/most_popular_shimmer"></include>
+                <include layout="@layout/most_popular_shimmer" />
 
-                <include layout="@layout/most_popular_shimmer"></include>
+                <include layout="@layout/most_popular_shimmer" />
 
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
@@ -100,19 +146,19 @@
 
                 <!--add  several shimmer placeholder layout -->
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
@@ -160,19 +206,19 @@
 
                 <!--add  several shimmer placeholder layout -->
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
-                <include layout="@layout/top_rated_shimmer"></include>
+                <include layout="@layout/top_rated_shimmer"/>
 
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>

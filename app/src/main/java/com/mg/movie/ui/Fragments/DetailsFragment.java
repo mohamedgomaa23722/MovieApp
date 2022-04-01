@@ -28,7 +28,7 @@ import com.mg.movie.adapter.CastAdapter;
 import com.mg.movie.adapter.TopRatedAdapter;
 import com.mg.movie.databinding.FragmentDetailsBinding;
 import com.mg.movie.model.castData.cast;
-import com.mg.movie.model.movie;
+import com.mg.movie.model.MovieData.movie;
 import com.mg.movie.network.OnCastClicked;
 import com.mg.movie.network.OnItemClicked;
 import com.mg.movie.ui.YoutubeActivity;
@@ -48,6 +48,8 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
     private String yKey;
     @Inject
     CastAdapter adapter;
+    @Inject
+    TopRatedAdapter SimilarMoviesAdapter;
     @Inject
     TopRatedAdapter recommendationsAdapter;
 
@@ -80,9 +82,6 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
         //set movie Image to each one youtube and main image
         Glide.with(this).load(IMAGE_URL + movie.getPoster_path())
                 .into(binding.contentMovieImage);
-
-        Glide.with(this).load(IMAGE_URL + movie.getBackdrop_path())
-                .into(binding.MovieVideoImage);
         //set movie overview
         binding.contentMovieOverview.setText(movie.getOverview());
         // setup cast Data
@@ -91,6 +90,8 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
         SetupYoutubeVideo(movie.getId());
         //Setup Recommendation Data
         SetupRecommendationsList(movie.getId());
+        //Setup Similar Data
+        SetupSimilarMovies(movie.getId());
     }
 
     private void SetupCastAdapter(int MovieID) {
@@ -117,13 +118,25 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
     private void SetupRecommendationsList(int movie_id) {
         binding.ContentRecommendationRecycler.setAdapter(recommendationsAdapter);
         viewModel.getRecommendedMovies(movie_id);
-        viewModel.getRecommendedMoviesData().observe(getViewLifecycleOwner(), RecommendationData -> {
-            if (!RecommendationData.isEmpty())
-                recommendationsAdapter.setList(RecommendationData);
+        viewModel.getRecommendedMoviesData().observe(getViewLifecycleOwner(), RecommendedMovies -> {
+            if (!RecommendedMovies.isEmpty())
+                recommendationsAdapter.setList(RecommendedMovies);
             else
                 binding.recomendedTitle.setVisibility(View.INVISIBLE);
         });
         recommendationsAdapter.setOnItemClicked(this);
+    }
+
+    private void SetupSimilarMovies(int movie_id){
+        binding.ContentSimilarRecycler.setAdapter(SimilarMoviesAdapter);
+        viewModel.getSimilarMovies(movie_id);
+        viewModel.getSimilarMoviesData().observe(getViewLifecycleOwner(), SimilarMovies -> {
+            if (!SimilarMovies.isEmpty())
+                SimilarMoviesAdapter.setList(SimilarMovies);
+            else
+                binding.similarTitle.setVisibility(View.INVISIBLE);
+        });
+        SimilarMoviesAdapter.setOnItemClicked(this);
     }
 
     @Override
@@ -136,6 +149,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
     @Override
     public void onClickListener(movie movie) {
         NavController navController= Navigation.findNavController(binding.getRoot());
+
         Bundle SelectedMovie=new Bundle();
         SelectedMovie.putSerializable(MOVIE_DATA,movie);
         navController.navigate(R.id.action_detailsFragment_self,SelectedMovie);

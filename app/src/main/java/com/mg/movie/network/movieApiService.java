@@ -1,10 +1,9 @@
 package com.mg.movie.network;
 
-import android.graphics.Movie;
-
-import com.mg.movie.model.MovieResponse;
+import com.mg.movie.model.MovieData.MovieResponse;
 import com.mg.movie.model.castData.CastDetails;
 import com.mg.movie.model.castData.CastResponse;
+import com.mg.movie.model.personData.PersonResponse;
 import com.mg.movie.model.trialer.videoResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -37,5 +36,19 @@ public interface movieApiService {
     @GET("person/{person_id}")
     Single<CastDetails> getCastDetails(@Path("person_id") int person_id,
                                        @Query("api_key") String apiKe);
+
+    @GET("search/movie")
+    Observable<MovieResponse> SearchForMovie(
+            @Query("query") String MovieName,
+            @Query("api_key") String apiKe,
+            @Query("page") int page
+    );
+
+    @GET("search/person")
+    Observable<PersonResponse> SearchForActor(
+            @Query("query") String ActorName,
+            @Query("api_key") String apiKe,
+            @Query("page") int page
+    );
 
 }

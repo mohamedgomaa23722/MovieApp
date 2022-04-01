@@ -1,4 +1,4 @@
-package com.mg.movie.model;
+package com.mg.movie.model.MovieData;
 
 import java.io.Serializable;
 import java.util.ArrayList;

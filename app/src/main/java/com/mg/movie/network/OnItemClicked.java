@@ -1,6 +1,6 @@
 package com.mg.movie.network;
 
-import com.mg.movie.model.movie;
+import com.mg.movie.model.MovieData.movie;
 
 
 public interface OnItemClicked {

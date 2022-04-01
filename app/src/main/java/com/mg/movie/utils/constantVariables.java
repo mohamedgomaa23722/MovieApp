@@ -15,4 +15,8 @@ public class constantVariables {
     public static final String MOVIE_DATA="MOVIE_DATA";
     public static final String YOUTUBE_KEY_VALUE="SEND_YOUTUBE_KEY";
     public static final String CAST_ID="CAST_ID";
+    public static final String RECOMMENDED="recommendations";
+    public static final String SIMILAR="similar";
+    public static final String MOVIE="MOVIE";
+    public static final String ACTOR="ACTOR";
 }
