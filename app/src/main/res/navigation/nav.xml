@@ -20,7 +20,11 @@
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_mainFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/searchFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_viewAllMoviesFragment"
+            app:destination="@id/viewAllMoviesFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -30,22 +34,30 @@
         <action
             android:id="@+id/action_detailsFragment_to_castFragment"
             app:destination="@id/castFragment"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left"
-            app:popEnterAnim="@android:anim/slide_out_right"
-            app:popExitAnim="@android:anim/slide_in_left" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/castFragment" />
         <action
             android:id="@+id/action_detailsFragment_self"
             app:destination="@id/detailsFragment"
             app:launchSingleTop="false"
             app:popUpTo="@id/detailsFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailsFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/castFragment"
         android:name="com.mg.movie.ui.Fragments.CastFragment"
         android:label="Cast Details"
-        tools:layout="@layout/fragment_cast" />
+        tools:layout="@layout/fragment_cast" >
+        <action
+            android:id="@+id/action_castFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:popUpTo="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.mg.movie.ui.Fragments.SearchFragment"
@@ -53,9 +65,20 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:popUpTo="@id/detailsFragment" />
         <action
             android:id="@+id/action_searchFragment_to_castFragment2"
-            app:destination="@id/castFragment" />
+            app:destination="@id/castFragment"
+            app:popUpTo="@id/castFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewAllMoviesFragment"
+        android:name="com.mg.movie.ui.Fragments.ViewAllMoviesFragment"
+        android:label="fragment_view_all_movies"
+        tools:layout="@layout/fragment_view_all_movies" >
+        <action
+            android:id="@+id/action_viewAllMoviesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 </navigation>

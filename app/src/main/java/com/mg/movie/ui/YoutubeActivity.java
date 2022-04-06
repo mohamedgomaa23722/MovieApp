@@ -6,6 +6,7 @@ import static com.mg.movie.utils.constantVariables.YOUTUBE_KEY_VALUE;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -17,6 +18,7 @@ import com.mg.movie.databinding.FragmentDetailsBinding;
 public class YoutubeActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
     private ActivityYoutubeBinding binding;
     private String Key;
+    private static final String TAG = "YoutubeActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,7 @@ public class YoutubeActivity extends YouTubeBaseActivity implements YouTubePlaye
         setContentView(binding.getRoot());
 
         Key = getIntent().getStringExtra(YOUTUBE_KEY_VALUE);
+        Log.d(TAG, "testYoutubeSetupYoutubeVideo: "+Key);
         binding.ContentYoutubeView.initialize(YOUTUBE_API_KEY,this);
     }
 
@@ -34,6 +37,6 @@ public class YoutubeActivity extends YouTubeBaseActivity implements YouTubePlaye
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
+        Log.d(TAG, "onInitializationFailure: "+youTubeInitializationResult.getErrorDialog(this,0));
     }
 }

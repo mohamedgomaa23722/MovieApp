@@ -75,6 +75,18 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/content_movie_date" />
+
+            <ImageView
+                android:id="@+id/BackToHomeFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:padding="@dimen/_10sdp"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RatingBar

@@ -4,5 +4,5 @@ import com.mg.movie.model.MovieData.movie;
 
 
 public interface OnItemClicked {
-    public void onClickListener(movie movie);
+    public void onClickListener(Object movie);
 }

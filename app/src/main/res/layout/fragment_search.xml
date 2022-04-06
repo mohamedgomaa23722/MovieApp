@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_rectangle_14"
     tools:context=".ui.Fragments.SearchFragment">
-
+ <androidx.constraintlayout.widget.ConstraintLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
     <TextView
         android:id="@+id/Search_page_title"
         android:layout_width="wrap_content"
@@ -90,10 +92,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Selected_search_View" />
 
+     <TextView
+         android:id="@+id/ResultMessage"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:gravity="center"
+         android:text="Search for movies or actors"
+         android:textColor="@color/shimmer_placeholder2"
+         android:textSize="20sp"
+         android:textStyle="bold"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/Search_edx"
+         app:layout_constraintVertical_bias="0.82" />
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="invisible"
         android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,9 +126,9 @@
 
             <!--add  several shimmer placeholder layout -->
 
-            <include layout="@layout/search_shimmer"></include>
+            <include layout="@layout/search_shimmer"/>
 
-            <include layout="@layout/search_shimmer"></include>
+            <include layout="@layout/search_shimmer"/>
 
             <include layout="@layout/search_shimmer"></include>
 
@@ -133,9 +150,49 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Search_edx"
-        tools:listitem="@layout/search_item" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        />
+
+    <LinearLayout
+        android:id="@+id/SearchpageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchRecyclerView"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/Search_MinusPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:id="@+id/Search_PageNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+
+            />
+
+        <ImageView
+            android:id="@+id/Search_PlusPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/right_arrow" />
+    </LinearLayout>
+ </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

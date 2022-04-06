@@ -4,6 +4,7 @@ import static com.mg.movie.utils.constantVariables.TMDB_API_KEY;
 
 import com.mg.movie.model.MovieData.MovieResponse;
 import com.mg.movie.model.castData.CastDetails;
+import com.mg.movie.model.PersonMovieCredits.CastMoviesResponse;
 import com.mg.movie.model.castData.CastResponse;
 import com.mg.movie.model.personData.PersonResponse;
 import com.mg.movie.model.trialer.videoResponse;
@@ -24,7 +25,7 @@ public class Repository {
     }
 
     public Observable<MovieResponse> getMovies(String query, String api_key, int page) {
-        return movieApiService.getMovies(query, api_key, page);
+        return movieApiService.getMovies(query, api_key, page, "en-US");
     }
 
     public Observable<CastResponse> getCast(int Movie_ID) {
@@ -43,10 +44,14 @@ public class Repository {
         return movieApiService.getCastDetails(person_id, TMDB_API_KEY);
     }
 
-    public Observable<MovieResponse> SearchForSomeMovie(String MovieName){
-        return movieApiService.SearchForMovie(MovieName,TMDB_API_KEY,1);
+    public Observable<MovieResponse> SearchForSomeMovie(String MovieName, int PageNumber){
+        return movieApiService.SearchForMovie(MovieName,TMDB_API_KEY,PageNumber);
     }
     public Observable<PersonResponse> SearchForSomeActor(String ActorName){
         return movieApiService.SearchForActor(ActorName,TMDB_API_KEY,1);
+    }
+
+    public Observable<CastMoviesResponse> GetSomeActorMovies(int person_id){
+        return movieApiService.GetSomeActorMovies(person_id,TMDB_API_KEY);
     }
 }

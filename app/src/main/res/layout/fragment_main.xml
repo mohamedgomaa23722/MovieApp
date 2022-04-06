@@ -70,6 +70,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/SearchViewContainer" />
 
+        <TextView
+            android:id="@+id/ViewAllMostPopular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:drawableEnd="@drawable/right_arrow"
+            android:gravity="center"
+            android:text="View All"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/popular_title"
+            app:layout_constraintTop_toBottomOf="@+id/SearchViewContainer" />
+
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerLayout"
             android:layout_width="match_parent"
@@ -129,6 +145,23 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shimmerLayout" />
+
+        <TextView
+            android:id="@+id/ViewAllTopRated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:drawableEnd="@drawable/right_arrow"
+            android:gravity="center"
+            android:text="View All"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/top_rated_title"
+            app:layout_constraintTop_toBottomOf="@+id/shimmerLayout" />
+
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/top_rated_shimmer"
             android:layout_width="match_parent"
@@ -188,11 +221,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_rated_shimmer" />
 
+        <TextView
+            android:id="@+id/ViewAllupcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:drawableEnd="@drawable/right_arrow"
+            android:gravity="center"
+            android:text="View All"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/upcoming_title"
+            app:layout_constraintTop_toBottomOf="@+id/top_rated_shimmer" />
+
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/upcoming_shimmer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upcoming_title"
@@ -230,10 +278,51 @@
             android:orientation="horizontal"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upcoming_title"
+            tools:listitem="@layout/rateditem" />
+
+        <TextView
+            android:id="@+id/now_playing_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="Now Playing"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upcoming_shimmer" />
+
+        <TextView
+            android:id="@+id/ViewAllNowPlaying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:drawableEnd="@drawable/right_arrow"
+            android:gravity="center"
+            android:text="View All"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/now_playing_title"
+            app:layout_constraintTop_toBottomOf="@+id/upcoming_shimmer" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Now_playing_Recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/now_playing_title"
             tools:listitem="@layout/rateditem" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

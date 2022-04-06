@@ -52,12 +52,10 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
         cast cast = mList.get(position);
 
         Glide.with(mContext).load(IMAGE_URL+cast.getProfile_path())
-                .placeholder(R.drawable.loading)
-                .fallback(R.drawable.loading)
-                .fitCenter()
                 .into(holder.cast_Image);
         if (cast.getProfile_path() ==null)
-            Log.d(TAG, "gomaaonBindViewHolder: null");
+            Glide.with(mContext).load(R.drawable.loading)
+            .centerInside().into(holder.cast_Image);
 
         holder.cast_Name.setText(cast.getName());
         holder.cast_rule_name.setText(cast.getCharacter());

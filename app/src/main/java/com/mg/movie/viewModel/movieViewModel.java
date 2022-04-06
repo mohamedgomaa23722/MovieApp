@@ -1,5 +1,6 @@
 package com.mg.movie.viewModel;
 
+import static com.mg.movie.utils.constantVariables.NOW_PLAYING;
 import static com.mg.movie.utils.constantVariables.POPULAR;
 import static com.mg.movie.utils.constantVariables.RECOMMENDED;
 import static com.mg.movie.utils.constantVariables.SIMILAR;
@@ -13,6 +14,7 @@ import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.mg.movie.model.PersonMovieCredits.CastMovies;
 import com.mg.movie.model.castData.CastDetails;
 import com.mg.movie.model.castData.cast;
 import com.mg.movie.model.MovieData.movie;
@@ -32,6 +34,7 @@ public class movieViewModel extends ViewModel {
     private final MutableLiveData<List<movie>> moviesData = new MutableLiveData<>();
     private final MutableLiveData<List<movie>> topRatedMoviesData = new MutableLiveData<>();
     private final MutableLiveData<List<movie>> upComingMoviesData = new MutableLiveData<>();
+    private final MutableLiveData<List<movie>> nowPlayingMoviesData = new MutableLiveData<>();
     private final MutableLiveData<List<cast>> movieCastData = new MutableLiveData<>();
     private final MutableLiveData<List<movieTrailer>> movieTrailerData = new MutableLiveData<>();
     private final MutableLiveData<List<movie>> RecommendedMoviesData = new MutableLiveData<>();
@@ -39,10 +42,22 @@ public class movieViewModel extends ViewModel {
     private final MutableLiveData<List<movie>> SimilarMoviesData = new MutableLiveData<>();
     private final MutableLiveData<List<movie>> SearchedResultData = new MutableLiveData<>();
     private final MutableLiveData<List<Person>> SearchedActorResultData = new MutableLiveData<>();
+    private final MutableLiveData<List<CastMovies>> ActorMoviesData = new MutableLiveData<>();
+    private final MutableLiveData<List<movie>> AllMoviesByType = new MutableLiveData<>();
+
 
     @ViewModelInject
     public movieViewModel(Repository repository) {
         this.repository = repository;
+    }
+
+    public void getAllMoviesByType(String Type, int page) {
+        repository.getMovies(Type, TMDB_API_KEY, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> AllMoviesByType.setValue(movieResponse.getResults())
+                        , error -> Log.e("viewModel", "", error)
+                        , () -> Log.d(TAG, "Completed: "));
     }
 
     public void getPopularMovies() {
@@ -73,6 +88,15 @@ public class movieViewModel extends ViewModel {
                         , () -> Log.d(TAG, "Completed: "));
     }
 
+    public void getNowPlayingMovies() {
+        repository.getMovies(NOW_PLAYING, TMDB_API_KEY, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> nowPlayingMoviesData.setValue(movieResponse.getResults())
+                        , error -> Log.e("viewModel", "", error)
+                        , () -> Log.d(TAG, "Completed: "));
+    }
+
     public void getMovieCast(int movie_id) {
         repository.getCast(movie_id)
                 .subscribeOn(Schedulers.io())
@@ -91,8 +115,8 @@ public class movieViewModel extends ViewModel {
                         , () -> Log.d(TAG, "Completed: "));
     }
 
-    public void getRecommendedMovies(int movie_id){
-        repository.getSpecificMovies(movie_id,RECOMMENDED)
+    public void getRecommendedMovies(int movie_id) {
+        repository.getSpecificMovies(movie_id, RECOMMENDED)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(RecommendedResponse -> RecommendedMoviesData.setValue(RecommendedResponse.getResults())
@@ -100,15 +124,15 @@ public class movieViewModel extends ViewModel {
                         , () -> Log.d(TAG, "Completed: "));
     }
 
-    public void getCastDetails(int Person_Id){
+    public void getCastDetails(int Person_Id) {
         repository.getCastDetails(Person_Id)
-                   .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(CastDetailsData::setValue);
     }
 
-    public void getSimilarMovies(int movie_id){
-        repository.getSpecificMovies(movie_id,SIMILAR)
+    public void getSimilarMovies(int movie_id) {
+        repository.getSpecificMovies(movie_id, SIMILAR)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(SimilarResponse -> SimilarMoviesData.setValue(SimilarResponse.getResults())
@@ -116,8 +140,8 @@ public class movieViewModel extends ViewModel {
                         , () -> Log.d(TAG, "Completed: "));
     }
 
-    public void SearchForSomeMovie(String MovieName){
-        repository.SearchForSomeMovie(MovieName)
+    public void SearchForSomeMovie(String MovieName, int PageNumber) {
+        repository.SearchForSomeMovie(MovieName, PageNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(SearchResponse -> SearchedResultData.setValue(SearchResponse.getResults())
@@ -125,13 +149,23 @@ public class movieViewModel extends ViewModel {
                         , () -> Log.d(TAG, "Completed: "));
     }
 
-    public void SearchForSomeActor(String ActorName){
+    public void SearchForSomeActor(String ActorName) {
         repository.SearchForSomeActor(ActorName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(ActorResponse -> SearchedActorResultData.setValue(ActorResponse.getResults())
                         , error -> Log.e("viewModel", "", error)
                         , () -> Log.d(TAG, "Completed: "));
+    }
+
+    public void GetSomeActorMovies(int person_id) {
+        repository.GetSomeActorMovies(person_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(ActorMoviesResponse -> ActorMoviesData.setValue(ActorMoviesResponse.getCast())
+                        , error -> Log.e("viewModel", "", error)
+                        , () -> Log.d(TAG, "Completed: ")
+                );
     }
 
     public MutableLiveData<List<movie>> getMoviesData() {
@@ -172,5 +206,17 @@ public class movieViewModel extends ViewModel {
 
     public MutableLiveData<List<Person>> getSearchedActorResultData() {
         return SearchedActorResultData;
+    }
+
+    public MutableLiveData<List<CastMovies>> getActorMoviesData() {
+        return ActorMoviesData;
+    }
+
+    public MutableLiveData<List<movie>> getNowPlayingMoviesData() {
+        return nowPlayingMoviesData;
+    }
+
+    public MutableLiveData<List<movie>> getAllMoviesByType() {
+        return AllMoviesByType;
     }
 }

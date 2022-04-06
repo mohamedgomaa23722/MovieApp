@@ -34,6 +34,7 @@ import com.mg.movie.network.OnItemClicked;
 import com.mg.movie.ui.YoutubeActivity;
 import com.mg.movie.viewModel.movieViewModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,6 +46,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
     private static final String TAG = "DetailsFragment";
     private FragmentDetailsBinding binding;
     private movieViewModel viewModel;
+    private NavController navController;
     private String yKey;
     @Inject
     CastAdapter adapter;
@@ -66,6 +68,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(movieViewModel.class);
         movie movie = (movie) getArguments().get(MOVIE_DATA);
+        navController = Navigation.findNavController(binding.getRoot());
         Log.d(TAG, "onViewCreated: " + movie.getOriginal_title());
         SetupViews(movie);
 
@@ -80,8 +83,12 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
         float movieRate = (float) (movie.getVote_average() / 2.00);
         binding.contentMovieRate.setRating(movieRate);
         //set movie Image to each one youtube and main image
-        Glide.with(this).load(IMAGE_URL + movie.getPoster_path())
-                .into(binding.contentMovieImage);
+        if (movie.getPoster_path() != null)
+            Glide.with(this).load(IMAGE_URL + movie.getPoster_path())
+                    .into(binding.contentMovieImage);
+        else
+            Glide.with(this).load(IMAGE_URL + movie.getBackdrop_path())
+                    .into(binding.contentMovieImage);
         //set movie overview
         binding.contentMovieOverview.setText(movie.getOverview());
         // setup cast Data
@@ -92,6 +99,8 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
         SetupRecommendationsList(movie.getId());
         //Setup Similar Data
         SetupSimilarMovies(movie.getId());
+        //Handle onclick item
+        binding.BackToHomeFragment.setOnClickListener(this);
     }
 
     private void SetupCastAdapter(int MovieID) {
@@ -111,8 +120,17 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
         viewModel.getMovieTrailer(movie_id);
         viewModel.getMovieTrailerData().observe(getViewLifecycleOwner(), movieTrailers -> {
             yKey = movieTrailers.get(0).getKey();
+            Log.d(TAG, "testYoutubeSetupYoutubeVideo: 2-" + yKey);
+            if (yKey != null) {
+                binding.ContentPlayYoutubeVideo.setVisibility(View.VISIBLE);
+            }
         });
         binding.ContentPlayYoutubeVideo.setOnClickListener(this);
+        Log.d(TAG, "testYoutubeSetupYoutubeVideo: 1-" + yKey);
+        if (yKey == null) {
+            binding.ContentPlayYoutubeVideo.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private void SetupRecommendationsList(int movie_id) {
@@ -127,7 +145,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
         recommendationsAdapter.setOnItemClicked(this);
     }
 
-    private void SetupSimilarMovies(int movie_id){
+    private void SetupSimilarMovies(int movie_id) {
         binding.ContentSimilarRecycler.setAdapter(SimilarMoviesAdapter);
         viewModel.getSimilarMovies(movie_id);
         viewModel.getSimilarMoviesData().observe(getViewLifecycleOwner(), SimilarMovies -> {
@@ -141,25 +159,27 @@ public class DetailsFragment extends Fragment implements View.OnClickListener, O
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), YoutubeActivity.class);
-        intent.putExtra(YOUTUBE_KEY_VALUE, yKey);
-        startActivity(intent);
+        if (view.getId() == R.id.BackToHomeFragment) {
+            navController.navigate(R.id.action_detailsFragment_to_mainFragment);
+        } else {
+            Intent intent = new Intent(getActivity(), YoutubeActivity.class);
+            intent.putExtra(YOUTUBE_KEY_VALUE, yKey);
+            startActivity(intent);
+        }
     }
 
     @Override
-    public void onClickListener(movie movie) {
-        NavController navController= Navigation.findNavController(binding.getRoot());
+    public void onClickListener(Object object) {
 
-        Bundle SelectedMovie=new Bundle();
-        SelectedMovie.putSerializable(MOVIE_DATA,movie);
-        navController.navigate(R.id.action_detailsFragment_self,SelectedMovie);
+        Bundle SelectedMovie = new Bundle();
+        SelectedMovie.putSerializable(MOVIE_DATA, (movie) object);
+        navController.navigate(R.id.action_detailsFragment_self, SelectedMovie);
     }
 
     @Override
     public void CastClicked(cast cast) {
-        NavController navController= Navigation.findNavController(binding.getRoot());
-        Bundle SelectedCast=new Bundle();
-        SelectedCast.putInt(CAST_ID,cast.getId());
-        navController.navigate(R.id.action_detailsFragment_to_castFragment,SelectedCast);
+        Bundle SelectedCast = new Bundle();
+        SelectedCast.putInt(CAST_ID, cast.getId());
+        navController.navigate(R.id.action_detailsFragment_to_castFragment, SelectedCast);
     }
 }

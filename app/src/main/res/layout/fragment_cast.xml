@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
+    android:background="@drawable/ic_rectangle_14"
     tools:context=".ui.Fragments.CastFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/purple_200">
-
+      <ImageView
+          android:id="@+id/BackToDetailsFragment"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_baseline_arrow_back_24"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          android:layout_marginStart="@dimen/_8sdp"
+          android:layout_marginTop="@dimen/_8sdp"
+          android:padding="@dimen/_10sdp"
+          />
         <androidx.cardview.widget.CardView
             android:id="@+id/Cast_ImageHolder"
             android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="@dimen/_160sdp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/purple_200"
             app:cardCornerRadius="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/BackToDetailsFragment">
 
             <ImageView
                 android:id="@+id/Cast_Image"
@@ -37,58 +43,80 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:text="Michel jackson"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/Cast_ImageHolder"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/BackToDetailsFragment"/>
+
+        <RatingBar
+            android:id="@+id/cast_rate"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:backgroundTint="@color/yellow"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/yellow"
+            android:progressTint="@color/yellow"
+            android:rating="2"
+            android:secondaryProgress="5"
+            android:secondaryProgressTint="@color/shimmer_placeholder2"
+            app:layout_constraintStart_toEndOf="@+id/Cast_ImageHolder"
+            app:layout_constraintTop_toBottomOf="@+id/Cast_Name" />
+        <TextView
+            android:id="@+id/cast_rate_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.5"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/yellow"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/cast_rate"
+            app:layout_constraintTop_toBottomOf="@+id/Cast_Name"
+            />
 
         <TextView
-            android:id="@+id/Cast_Department"
+            android:id="@+id/Cast_Details"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
-            android:text="25"
-            android:textColor="#989898"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:text="@string/spider"
+            android:textColor="#959595"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:maxLength="200"
+            android:textSize="14sp"
+            android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/Cast_ImageHolder"
-            app:layout_constraintTop_toBottomOf="@id/Cast_Name" />
-
-        <TextView
-            android:id="@+id/Cast_popularity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:text="25 popularity"
-            android:textColor="#989898"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/Cast_ImageHolder"
-            app:layout_constraintTop_toBottomOf="@id/Cast_Department" />
+            app:layout_constraintTop_toBottomOf="@+id/cast_rate" />
 
         <TextView
             android:id="@+id/about_title"
             style="@style/label_text"
-            android:text="@string/overview"
+            android:text="Best Movies"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Cast_ImageHolder" />
 
-        <TextView
-            android:id="@+id/Cast_About"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about_title" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Cast_Best_Movies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_title"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/rateditem" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>

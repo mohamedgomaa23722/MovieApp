@@ -18,18 +18,18 @@
 
         <RatingBar
             android:id="@+id/rating_bar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="4.5"
-            android:progressTint="@color/yellow"
-            android:backgroundTint="@color/yellow"
-            android:progressBackgroundTint="@color/yellow"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:backgroundTint="@color/yellow"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/yellow"
+            android:progressTint="@color/yellow"
+            android:rating="4.5"
             android:transformPivotX="0dp"
             android:transformPivotY="0dp" />
 
@@ -41,12 +41,12 @@
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:text="7.5"
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_toEndOf="@+id/rating_bar"
+            android:text="7.5"
             android:textColor="@color/yellow"
-            android:textStyle="bold"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -15,6 +15,7 @@ public class crew implements Serializable {
     private String department;
     private String job;
 
+
     public crew(boolean adult, int gender, int id, String known_for_department, String name, String original_name, long popularity, String profile_path, String credit_id, String department, String job) {
         this.adult = adult;
         this.gender = gender;

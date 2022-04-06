@@ -9,6 +9,7 @@ public class constantVariables {
     public static final String TOP_RATED = "top_rated";
     public static final String UPCOMING = "upcoming";
     public static final String TRAILER = "trailer";
+    public static final String NOW_PLAYING = "now_playing";
 
 
 
@@ -19,4 +20,9 @@ public class constantVariables {
     public static final String SIMILAR="similar";
     public static final String MOVIE="MOVIE";
     public static final String ACTOR="ACTOR";
+
+    //operations
+    public static final String MINUS="MINUS";
+    public static final String PLUS="PLUS";
+    public static final String MOVIE_TYPE = "MOVIE_TYPE";
 }

@@ -2,6 +2,7 @@ package com.mg.movie.network;
 
 import com.mg.movie.model.MovieData.MovieResponse;
 import com.mg.movie.model.castData.CastDetails;
+import com.mg.movie.model.PersonMovieCredits.CastMoviesResponse;
 import com.mg.movie.model.castData.CastResponse;
 import com.mg.movie.model.personData.PersonResponse;
 import com.mg.movie.model.trialer.videoResponse;
@@ -17,7 +18,8 @@ public interface movieApiService {
     @GET("movie/{query}")
     Observable<MovieResponse> getMovies(@Path("query") String query,
                                         @Query("api_key") String apiKey,
-                                        @Query("page") int page);
+                                        @Query("page") int page,
+                                        @Query("language") String language);
 
     @GET("movie/{movie_id}/credits")
     Observable<CastResponse> getCast(@Path("movie_id") int movie_id,
@@ -51,4 +53,7 @@ public interface movieApiService {
             @Query("page") int page
     );
 
+    @GET("person/{person_id}/movie_credits")
+    Observable<CastMoviesResponse> GetSomeActorMovies(@Path("person_id") int person_id,
+                                                      @Query("api_key") String apiKe);
 }

@@ -5,6 +5,7 @@ import static com.mg.movie.utils.constantVariables.IMAGE_URL;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.mg.movie.model.personData.Person;
 import com.mg.movie.network.OnItemClicked;
 import com.mg.movie.ui.ViewHolder.SearchViewHolder;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,10 +51,17 @@ public class ActorAdapter extends RecyclerView.Adapter<SearchViewHolder> {
         Glide.with(mContext).load(IMAGE_URL + mList.get(position).getProfile_path())
                 .into(holder.Searched_Movie_Image);
         holder.Searched_Movie_Name.setText(mList.get(position).getName());
-        if (mList.get(position).getKnown_for().get(0) != null)
-            holder.Searched_Movie_Overview.setText(mList.get(position).getKnown_for().get(0).getOverview());
-        else
-            holder.Searched_Movie_Overview.setText(mList.get(position).getKnown_for().get(1).getOverview());
+        if (mList.get(position).getKnown_for() !=null) {
+            if (mList.get(position).getKnown_for().get(0) != null)
+                holder.Searched_Movie_Overview.setText(mList.get(position).getKnown_for().get(0).getOverview());
+            else
+                holder.Searched_Movie_Overview.setText(mList.get(position).getKnown_for().get(1).getOverview());
+        }
+        holder.itemView.setOnClickListener(view -> onItemClicked.onClickListener(mList.get(position)));
+
+        float popularity = (float) (mList.get(position).getPopularity() /10);
+        holder.SearchMovieRated.setText(new DecimalFormat("#.##").format(popularity));
+        holder.SearchMovieRatingView.setRating(popularity);
 
     }
 

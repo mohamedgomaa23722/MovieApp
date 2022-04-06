@@ -1,7 +1,13 @@
 package com.mg.movie.ui.Fragments;
 
 import static com.mg.movie.utils.constantVariables.MOVIE_DATA;
+import static com.mg.movie.utils.constantVariables.MOVIE_TYPE;
+import static com.mg.movie.utils.constantVariables.NOW_PLAYING;
+import static com.mg.movie.utils.constantVariables.POPULAR;
+import static com.mg.movie.utils.constantVariables.TOP_RATED;
+import static com.mg.movie.utils.constantVariables.UPCOMING;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +32,8 @@ import com.mg.movie.model.MovieData.movie;
 import com.mg.movie.network.OnItemClicked;
 import com.mg.movie.viewModel.movieViewModel;
 
+import java.io.Serializable;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -41,6 +49,8 @@ public class MainFragment extends Fragment implements OnItemClicked, View.OnClic
     TopRatedAdapter topRatedAdapter;
     @Inject
     TopRatedAdapter upcomingAdapter;
+    @Inject
+    TopRatedAdapter NowPLayingAdapter;
     private NavController navController;
 
     @Override
@@ -61,6 +71,7 @@ public class MainFragment extends Fragment implements OnItemClicked, View.OnClic
         InitializePopularMovies();
         InitializeTopRatedMovies();
         InitializeUpcomingMovies();
+        InitializeNowPlayingMovies();
     }
 
     @Override
@@ -73,10 +84,16 @@ public class MainFragment extends Fragment implements OnItemClicked, View.OnClic
         binding.PopularRecycler.setAdapter(popularAdapter);
         binding.ratedRecycler.setAdapter(topRatedAdapter);
         binding.UpcomingRecycler.setAdapter(upcomingAdapter);
+        binding.NowPlayingRecycler.setAdapter(NowPLayingAdapter);
         //Handle onItemClicked
         popularAdapter.setOnItemClicked(this);
         topRatedAdapter.setOnItemClicked(this);
         upcomingAdapter.setOnItemClicked(this);
+        NowPLayingAdapter.setOnItemClicked(this);
+        binding.ViewAllMostPopular.setOnClickListener(this);
+        binding.ViewAllTopRated.setOnClickListener(this);
+        binding.ViewAllNowPlaying.setOnClickListener(this);
+        binding.ViewAllupcoming.setOnClickListener(this);
         binding.SearchViewContainer.setOnClickListener(this);
     }
 
@@ -104,6 +121,13 @@ public class MainFragment extends Fragment implements OnItemClicked, View.OnClic
         });
     }
 
+    private void InitializeNowPlayingMovies() {
+        viewModel.getNowPlayingMovies();
+        viewModel.getNowPlayingMoviesData().observe(getViewLifecycleOwner(), NowPlayingMovies -> {
+            NowPLayingAdapter.setList(NowPlayingMovies);
+        });
+    }
+
     private void AnimateView(RecyclerView recyclerView, ShimmerFrameLayout shimmerFrameLayout) {
         shimmerFrameLayout.startShimmer();
         shimmerFrameLayout.setVisibility(View.INVISIBLE);
@@ -127,15 +151,35 @@ public class MainFragment extends Fragment implements OnItemClicked, View.OnClic
     }
 
     @Override
-    public void onClickListener(movie movie) {
+    public void onClickListener(Object movie) {
         Bundle SelectedMovie = new Bundle();
-        SelectedMovie.putSerializable(MOVIE_DATA, movie);
+        SelectedMovie.putSerializable(MOVIE_DATA, (movie) movie);
         MoveUp(R.id.action_mainFragment_to_detailsFragment2, SelectedMovie);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
-        MoveUp(R.id.action_mainFragment_to_searchFragment, null);
+        if (view.getId() == R.id.SearchViewContainer) {
+            MoveUp(R.id.action_mainFragment_to_searchFragment, null);
+        } else {
+            Bundle SelectedType = new Bundle();
+            switch (view.getId()){
+                case R.id.ViewAllMostPopular:
+                    SelectedType.putString(MOVIE_TYPE,POPULAR);
+                    break;
+                case R.id.ViewAllNowPlaying:
+                    SelectedType.putString(MOVIE_TYPE,NOW_PLAYING);
+                    break;
+                case R.id.ViewAllTopRated:
+                    SelectedType.putString(MOVIE_TYPE,TOP_RATED);
+                    break;
+                case R.id.ViewAllupcoming:
+                    SelectedType.putString(MOVIE_TYPE,UPCOMING);
+                    break;
+            }
+            MoveUp(R.id.action_mainFragment_to_viewAllMoviesFragment,SelectedType);
+        }
     }
 
     private void MoveUp(int Action, Bundle Data) {
