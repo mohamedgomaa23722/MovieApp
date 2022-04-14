@@ -12,6 +12,7 @@ This is a sample  movie app present alot of movies
 - Java
 - TMDB's Api
 - Dagger Hilt
+  ![The Acyclic Graph ](https://github.com/mohamedgomaa23722/MovieApp/blob/master/Unnamed%20File(1).jpg)
 - RxJava
 - MVVM
 - Glide
