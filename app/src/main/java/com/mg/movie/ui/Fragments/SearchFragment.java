@@ -101,6 +101,7 @@ public class SearchFragment extends Fragment implements TextWatcher, View.OnClic
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        PageNumber = 1;
         if (String.valueOf(charSequence).length() > 0) {
             binding.ResultMessage.setVisibility(View.INVISIBLE);
             binding.shimmerLayout.setVisibility(View.VISIBLE);
@@ -152,15 +153,15 @@ public class SearchFragment extends Fragment implements TextWatcher, View.OnClic
         SetUpData(Query);
     }
 
-    private void SetUpData(String Query){
+    private void SetUpData(String Query) {
         if (SelectedSearchType.equals(MOVIE)) {
             viewModel.SearchForSomeMovie(Query, PageNumber);
             viewModel.getSearchedResultData().observe(this, SearchedResultData -> {
-                if (SearchedResultData.isEmpty()){
+                if (SearchedResultData.isEmpty()) {
                     binding.ResultMessage.setVisibility(View.VISIBLE);
                     binding.SearchpageView.setVisibility(View.INVISIBLE);
                     binding.ResultMessage.setText("No Movie Found");
-                }else{
+                } else {
                     binding.ResultMessage.setVisibility(View.INVISIBLE);
                     binding.SearchpageView.setVisibility(View.VISIBLE);
                 }
@@ -170,10 +171,10 @@ public class SearchFragment extends Fragment implements TextWatcher, View.OnClic
         } else {
             viewModel.SearchForSomeActor(Query);
             viewModel.getSearchedActorResultData().observe(this, SearchedActorResultsData -> {
-                if (SearchedActorResultsData.isEmpty()){
+                if (SearchedActorResultsData.isEmpty()) {
                     binding.ResultMessage.setVisibility(View.VISIBLE);
                     binding.ResultMessage.setText("No Actor Found");
-                }else{
+                } else {
                     binding.ResultMessage.setVisibility(View.INVISIBLE);
                 }
                 actorAdapter.setList(SearchedActorResultsData);
@@ -181,6 +182,7 @@ public class SearchFragment extends Fragment implements TextWatcher, View.OnClic
             });
         }
     }
+
     /*
      Type one : for the item which will be unselected
      type two : for the item which will be selected

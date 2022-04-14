@@ -73,6 +73,8 @@ public class CastFragment extends Fragment implements View.OnClickListener, OnIt
             binding.castRateText.setText(String.valueOf(new DecimalFormat("#.##").format(CastRate)));
             binding.CastName.setText(CastDetailsResponse.getName());
             binding.CastDetails.setText(CastDetailsResponse.getBiography());
+            binding.CastBirthday.setText(CastDetailsResponse.getBirthday());
+            binding.CastNationality.setText(CastDetailsResponse.getPlace_of_birth());
         });
         //setup best movies list
         binding.CastBestMovies.setAdapter(adapter);

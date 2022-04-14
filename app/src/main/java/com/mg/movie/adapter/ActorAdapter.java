@@ -51,7 +51,7 @@ public class ActorAdapter extends RecyclerView.Adapter<SearchViewHolder> {
         Glide.with(mContext).load(IMAGE_URL + mList.get(position).getProfile_path())
                 .into(holder.Searched_Movie_Image);
         holder.Searched_Movie_Name.setText(mList.get(position).getName());
-        if (mList.get(position).getKnown_for() !=null) {
+        if (!mList.get(position).getKnown_for().isEmpty()) {
             if (mList.get(position).getKnown_for().get(0) != null)
                 holder.Searched_Movie_Overview.setText(mList.get(position).getKnown_for().get(0).getOverview());
             else

@@ -82,6 +82,8 @@
         android:drawablePadding="@dimen/_15sdp"
         android:elevation="5dp"
         android:focusable="true"
+        android:inputType="textPersonName"
+        android:minLines="1"
         android:hint="Search"
         android:textColor="@color/white"
         android:paddingEnd="@dimen/_10sdp"

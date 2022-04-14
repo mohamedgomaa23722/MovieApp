@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_rectangle_14"
     tools:context=".ui.Fragments.CastFragment">
-
+ <androidx.constraintlayout.widget.ConstraintLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
       <ImageView
           android:id="@+id/BackToDetailsFragment"
           android:layout_width="wrap_content"
@@ -83,34 +85,76 @@
             app:layout_constraintTop_toBottomOf="@+id/Cast_Name"
             />
 
-        <TextView
-            android:id="@+id/Cast_Details"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:text="@string/spider"
-            android:textColor="#959595"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:maxLength="200"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/Cast_ImageHolder"
-            app:layout_constraintTop_toBottomOf="@+id/cast_rate" />
+    <TextView
+        android:id="@+id/Cast_Birthday"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:drawableStart="@drawable/ic_baseline_date_range_24"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="25/5/1997"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/Cast_ImageHolder"
+        app:layout_constraintTop_toBottomOf="@+id/cast_rate" />
 
+    <TextView
+        android:id="@+id/Cast_Nationality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:drawableStart="@drawable/ic_baseline_place_24"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="Egypt"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/Cast_ImageHolder"
+        app:layout_constraintTop_toBottomOf="@+id/Cast_Birthday" />
+    <TextView
+        android:id="@+id/overview_title"
+        style="@style/label_text"
+        android:text="@string/overview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Cast_ImageHolder" />
+
+    <TextView
+        android:id="@+id/Cast_Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:text="@string/spider"
+        android:textColor="#959595"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:maxLength="500"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/overview_title" />
         <TextView
             android:id="@+id/about_title"
             style="@style/label_text"
             android:text="Best Movies"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Cast_ImageHolder" />
+            app:layout_constraintTop_toBottomOf="@+id/Cast_Details" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Cast_Best_Movies"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -119,4 +163,6 @@
         app:layout_constraintTop_toBottomOf="@id/about_title"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/rateditem" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+ </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
